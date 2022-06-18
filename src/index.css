@@ -71,7 +71,26 @@ h3 {
 }
 
 .app {
+	position: relative;
 	height: 100%;
 	display: grid;
 	grid-template-rows: 90% 10%;
+}
+
+@media only screen and (hover: hover), (min-width: 480px) {
+    .app::after {
+		content: "Only small- and touch screens!";
+		color: white;
+		font-size: 2rem;
+
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: #000;
+		z-index: 100;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
