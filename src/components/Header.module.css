@@ -1,0 +1,13 @@
+.header {
+    background-color: var(--color-primary);
+    padding: .5rem;
+    padding-left: 2rem;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+}
+
+.header p {
+    font-size: 1.6rem;
+    font-weight: 400;
+}

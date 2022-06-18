@@ -1,13 +1,77 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+    --color-primary: #01406b;
+    --color-primary-dark: #003459;
+
+	--color-primary-light-1: #E6ECF0;
+	--color-primary-light-2: #B3C6D3;
+	--color-primary-light-3: #80A0B5;
+
+    --color-grey: #777;
+    --color-grey-light: #bdbdbd;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+	box-sizing: border-box;
+	font-size: 62.5%;
+	overflow: hidden;
+	height: -webkit-fill-available;
+	height: -moz-available;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+	font-weight: 500;
+	line-height: 1.6;
+	width: 100vw;
+	height: 100vh;
+	height: -webkit-fill-available;
+	height: -moz-available;
+}
+
+#root {
+	height: 100%;
+}
+
+.centered {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 {
+	font-size: 3rem;
+	font-weight: 600;
+}
+
+h2 {
+	font-size: 2.4rem;
+	font-weight: 500;
+}
+
+h3 {
+	font-size: 2rem;
+	font-weight: 400;
+}
+
+.app {
+	height: 100%;
+	display: grid;
+	grid-template-rows: 90% 10%;
 }

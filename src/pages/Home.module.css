@@ -1,0 +1,70 @@
+.container {
+    display: grid;
+    grid-template-rows: 8% 92%;
+}
+
+.main {
+    display: grid;
+    grid-template-rows: 8% 92%;
+}
+
+.options {
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.filters {
+    display: inline-block;
+}
+
+.sessions {
+    position: relative;
+}
+
+.list {
+    height: 100%;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: scroll;
+    padding-bottom: 2rem;
+}
+
+.add-btn {
+    position: absolute;
+    display: block;
+    bottom: 3rem;
+    right: 2rem;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    background-color: var(--color-primary-light-2);
+    box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
+}
+
+.add-btn::before,
+.add-btn::after {
+    position: absolute;
+    content: "";
+    background-color: var(--color-primary-light-1);
+    background-color: #fff;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 90%;
+}
+
+.add-btn::before {
+    height: 50%;
+    width: 5px;
+    border-radius: 100px;
+}
+
+.add-btn::after {
+    width: 50%;
+    height: 5px;
+    border-radius: 100px;
+}

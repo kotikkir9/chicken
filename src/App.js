@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { lazy, Suspense } from "solid-js";
+import { Routes, Route, Navigate } from "solid-app-router"
+import MenuNav from "./components/MenuNav";
+
+const Home = lazy(() => import("./pages/Home"));
+const WeighingSession = lazy(() => import("./pages/WeighingSession"));
 
 function App() {
-  return (
-    <div class="App">
-      <header class="App-header">
-        <img src={logo} class="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          class="App-link"
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className="app">
+			<Suspense fallback={<div className="centered"><p>Loading...</p></div>}>
+				<Routes>
+					<Route path="/" element={<Navigate replace href="/home" />} />
+					<Route path="/home" element={<Home />} />
+					<Route path="/session/new" element={<WeighingSession />} />
+					<Route path="/test" element={() => <div>Test</div>} />
+				</Routes>
+				<MenuNav />
+			</Suspense>
+		</div>
+	);
 }
 
 export default App;
