@@ -5,18 +5,20 @@
 
 .main {
     display: grid;
-    grid-template-rows: 8% 92%;
+    grid-template-rows: 10% 90%;
 }
 
 .options {
-    padding-right: 2rem;
+    margin: 0 2rem;
     padding-bottom: 0.5rem;
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: center;
+    position: relative;
 }
 
-.filters {
+.sort {
+    margin-top: 1rem;
     font-size: 1.4rem;
     font-weight: 600;
     background-color: var(--color-primary-light-1);
@@ -24,9 +26,11 @@
     border-radius: 100px;
     position: relative;
     text-transform: uppercase;
+    overflow: hidden;
+    transition: width 0.5s;
 }
 
-.filters::after {
+.sort::after {
     content: "";
     position: absolute;
     background-color: #000;
@@ -36,7 +40,92 @@
     right: 1rem;
     transform: translate(0, -50%);
     clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transition: clip-path 0.3s;
 }
+
+.sort.focus::after {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.drop-fill-effect {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 0;
+    height: 100%;
+    border-radius: 100px;
+
+    background-color: var(--color-primary-light-3);
+    opacity: 0;
+    transition: opacity 0.5s, width 0.5s 0.1s;
+}
+
+.touch-start .drop-fill-effect {
+    opacity: 0.3;
+    width: 200%;
+}
+
+.dropdown {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(0, 100%);
+
+    background-color: #fff;
+    z-index: 999;
+    opacity: 0.97;
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    animation: open-dropdown 0.3s;
+}
+
+@keyframes open-dropdown {
+    0% {
+        opacity: 0;
+        transform: translate(0, 70%);
+    }
+    100% {
+        opacity: 100;
+        transform: translate(0, 100%);
+    }
+}
+
+.dropdown a {
+    position: relative;
+    font-size: 1.4rem;
+    border: none;
+    background-color: inherit;
+    padding: 2rem 1.5rem;
+    padding-left: 5rem;
+}
+
+.dropdown a.selected {
+    font-weight: 600;
+    transition: 0.2s;
+    background-color: var(--color-primary-light-1);
+}
+
+.dropdown a.selected::before {
+    content: "";
+    position: absolute;
+    background-color: #000;
+    height: 13px;
+    width: 13px;
+    top: 50%;
+    left: 2rem;
+    transform: translate(0, -50%);
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%, 25.1% 50%);
+
+}
+
+/* ------------------------------- Sessions ------------------------------- */
 
 .sessions {
     position: relative;
@@ -44,7 +133,7 @@
 
 .list {
     height: 100%;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
