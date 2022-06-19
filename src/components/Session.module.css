@@ -1,6 +1,36 @@
 .container {
     width: 100%;
-    min-height: 8rem;
     background-color: var(--color-primary-light-1);
-    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    font-size: 1.4rem;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-primary-light-2);
+    padding: 0.5rem 0;
+    font-weight: 600;
+}
+
+.body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    padding: 1rem;
+    column-gap: 3rem;
+    row-gap: 0.5rem;
+}
+
+.body div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.body div p:nth-child(2) {
+    font-weight: 700;
 }

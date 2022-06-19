@@ -3,9 +3,11 @@ import Header from "../components/Header";
 import Session from "../components/Session";
 import classes from "./Home.module.css";
 
+import { sessions } from '../data/sessions';
+import { For } from "solid-js";
+
 function Home() {
     const navigate = useNavigate();
-
 
     const handleTouchStart = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -44,20 +46,13 @@ function Home() {
             </Header>
             <main className={classes.main}>
                 <div className={classes.options}>
-                    <div className={classes.filters}>Filters</div>
+                    <div className={classes.filters}>Sort by</div>
                 </div>
                 <section className={classes.sessions}>
                     <div className={classes.list}>
-                        <Session text={1} />
-                        <Session text={2} />
-                        <Session text={3} />
-                        <Session text={4} />
-                        <Session text={5} />
-                        <Session text={6} />
-                        <Session text={7} />
-                        <Session text={8} />
-                        <Session text={9} />
-                        <Session text={10} />
+                        <For each={sessions}>
+                            {(session) => <Session session={session} />}
+                        </For>
                     </div>
                     <div className={classes["add-btn"]} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} >
                         <div className={classes['btn-fill']}></div>

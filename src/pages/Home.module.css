@@ -9,14 +9,33 @@
 }
 
 .options {
-    padding: 1rem 2rem;
+    padding-right: 2rem;
+    padding-bottom: 0.5rem;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
 }
 
 .filters {
-    display: inline-block;
+    font-size: 1.4rem;
+    font-weight: 600;
+    background-color: var(--color-primary-light-1);
+    padding: 0.5rem 3rem;
+    border-radius: 100px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.filters::after {
+    content: "";
+    position: absolute;
+    background-color: #000;
+    height: 7px;
+    width: 7px;
+    top: 50%;
+    right: 1rem;
+    transform: translate(0, -50%);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
 }
 
 .sessions {
