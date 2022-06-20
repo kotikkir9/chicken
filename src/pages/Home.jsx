@@ -1,19 +1,37 @@
+import { For, createSignal, Show, createEffect } from "solid-js";
 import { useNavigate } from "solid-app-router";
+
 import Header from "../components/Header";
 import Session from "../components/Session";
-import classes from "./Home.module.css";
-import { sessions } from "../data/sessions";
-import { For, createSignal, Show } from "solid-js";
 import NewSessionButton from "../components/NewSessionButton";
+import LoadingSpinner from "../components/LoadingSpinner";
+
+import classes from "./Home.module.css";
+
 
 function Home() {
-    const navigate = useNavigate();
-    const [sessionList, setSessionList] = createSignal(sessions.sort((a, b) => b.date - a.date));
-    const [showDropdown, setShowDropdown] = createSignal(false);
-    const [orderBy, setOrderBy] = createSignal('asc');
-
     let optionsRef;
     let listRef;
+
+    const navigate = useNavigate();
+    const [sessionList, setSessionList] = createSignal([]);
+    const [showDropdown, setShowDropdown] = createSignal(false);
+    const [orderBy, setOrderBy] = createSignal('asc');
+    const [isLoading, setIsLoading] = createSignal(false);
+
+    createEffect(async () => {
+        setIsLoading(true);
+        const res = await fetch('https://solidjs-project-default-rtdb.europe-west1.firebasedatabase.app/chicken-weighing.json');
+        const json = await res.json();
+
+        const array = [];
+        for(const key in json) {
+            array.push({ id: key, ...json[key], date: new Date(json[key].date)});
+        }
+
+        setSessionList(array.sort((a, b) => b.date - a.date));
+        setIsLoading(false);
+    });
 
     const orderDescending = () => {
         handleHideDropdown();
@@ -33,7 +51,7 @@ function Home() {
         listRef.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    const handleDropdownTouchStart = (e) => {
+    const handleDropdownToggle = (e) => {
         e.stopPropagation();
         const target = e.currentTarget;
 
@@ -57,7 +75,7 @@ function Home() {
         }
     }
 
-    const handleNewSessionClick = () => {
+    const handleNewSessionClick = async () => {
         navigate("/session/new", { replace: true });
     }
 
@@ -68,7 +86,7 @@ function Home() {
             </Header>
             <main className={classes.main}>
                 <div className={classes.options}>
-                    <div ref={optionsRef} className={classes.sort} onTouchStart={handleDropdownTouchStart} onTouchEnd={(e) => e.preventDefault()}>
+                    <div ref={optionsRef} className={classes.sort} onTouchStart={handleDropdownToggle} onTouchEnd={(e) => e.preventDefault()}>
                         Sort by
                         <div className={classes['drop-fill-effect']}></div>
                     </div>
@@ -80,11 +98,15 @@ function Home() {
                     </Show>
                 </div>
                 <section className={classes.sessions}>
-                    <div ref={listRef} className={classes.list}>
-                        <For each={sessionList()}>
-                            {(e) => <Session session={e} /> }
-                        </For>
-                    </div>
+                    <Show when={!isLoading()} fallback={<div className="centered"><LoadingSpinner /></div>}>
+                        <div ref={listRef} className={classes.list}>
+                            <Show when={sessionList().length > 0} fallback={<div className="centered"><h2>No entries</h2></div>}>
+                                <For each={sessionList()}>
+                                    {(e) => <Session session={e} /> }
+                                </For>
+                            </Show>
+                        </div>
+                    </Show>
                     <NewSessionButton onClick={handleNewSessionClick} className={classes['new-session-btn']} />
                 </section>
             </main>

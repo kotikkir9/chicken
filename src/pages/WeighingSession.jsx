@@ -1,9 +1,11 @@
+import LoadingSpinner from "../components/LoadingSpinner";
+
 function WeighingSession() {
     return (
         <>
-            <h2>WeighingSession</h2>
+            <div className="centered"><LoadingSpinner /></div>
         </>
-    )
+    );
 }
 
 export default WeighingSession;

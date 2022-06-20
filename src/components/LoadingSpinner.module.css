@@ -1,0 +1,27 @@
+.loader {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 10px solid;
+    border-color: rgba(128, 160, 181, 0.35) rgba(128, 160, 181, 0.45)
+        rgba(128, 160, 181, 0.55) rgba(128, 160, 181, 0.7);
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.lol {
+    color: rgb(230, 236, 240);
+    color: rgb(179, 198, 211);
+    color: rgb(128, 160, 181);
+}
