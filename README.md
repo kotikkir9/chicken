@@ -1,3 +1,3 @@
-#Chicken Weighing App
+# Chicken Weighing App
 
 This app is created with SolidJS.
