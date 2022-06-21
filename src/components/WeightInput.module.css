@@ -1,0 +1,36 @@
+.container {
+    display: grid;
+    gap: 2rem;
+}
+
+.select {
+    justify-self: start;
+    width: 50%;
+}
+
+.input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+    text-align: center;
+    padding: 0.4rem 0;
+    font-size: 2.4rem;
+    font-weight: 700;
+    transition: 0.5s;
+    font-family: inherit;
+}
+
+.input:focus {
+    background-color: var(--color-primary-light-1);
+}
+
+.btn {
+    width: 100%;
+    font-size: 2.4rem;
+    border-radius: 15px;
+}
+
+.invalid {
+    background-color: rgba(255, 0, 0, 0.2);
+}

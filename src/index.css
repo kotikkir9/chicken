@@ -39,9 +39,7 @@ body {
 	font-weight: 500;
 	line-height: 1.6;
 	width: 100vw;
-	height: 100vh;
-	height: -webkit-fill-available;
-	height: -moz-available;
+	height: 100%;
 }
 
 #root {

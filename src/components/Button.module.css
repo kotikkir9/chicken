@@ -1,0 +1,38 @@
+.btn {
+    position: relative;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    font-family: inherit;
+    font-size: 1.4rem;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-fill {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background-color: #fff;
+    opacity: 0;
+    border-radius: 1000px;
+    transition: width 0s 0.3s, padding 0s 0.3s, opacity 1s;
+}
+
+.active {
+    transform: scale(0.96);
+}
+
+.active .btn-fill {
+    opacity: 0.3;
+    transition: width .2s, padding .2s;
+    width: 200%;
+    padding-bottom: 200%;
+}

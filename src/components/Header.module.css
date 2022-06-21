@@ -2,12 +2,21 @@
     background-color: var(--color-primary);
     padding: .5rem;
     padding-left: 2rem;
+    padding-right: 2rem;
     display: flex;
     align-items: flex-end;
+    justify-content: space-between;
     color: #fff;
 }
 
 .header p {
     font-size: 1.6rem;
     font-weight: 400;
+}
+
+.header a {
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: #fff;
 }
