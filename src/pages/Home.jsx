@@ -1,10 +1,10 @@
 import { For, createSignal, Show, createEffect } from "solid-js";
 import { useNavigate } from "solid-app-router";
 
-import Header from "../components/Header";
-import Session from "../components/Session";
-import NewSessionButton from "../components/NewSessionButton";
-import LoadingSpinner from "../components/LoadingSpinner";
+import Header from "../components/Layout/Header";
+import Session from "../components/Home/Session";
+import NewSessionButton from "../components/UI/NewSessionButton";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 import classes from "./Home.module.css";
 

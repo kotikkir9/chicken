@@ -5,7 +5,10 @@ import classes from "./SessionList.module.css";
 function SessionList(props) {
     return (
         <ul className={classes.container}>
-            <For each={props.list.reverse()} >
+            <Show when={props.list.length === 0}>
+                <h3 className="centered">No entries</h3>
+            </Show>
+            <For each={props.list} >
                 {(e, i)=> <ListItem item={e} index={i()} length={props.list.length} />}
             </For>
         </ul>

@@ -1,4 +1,4 @@
-import Button from './Button';
+import Button from '../UI/Button';
 import classes from './WeightInput.module.css';
 
 function WeightInput(props) {

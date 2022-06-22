@@ -1,11 +1,11 @@
 import { useNavigate } from "solid-app-router";
 import { createSignal, onCleanup, onMount } from "solid-js";
 
-import Button from "../components/Button";
-import Header from "../components/Header";
+import Button from "../components/UI/Button";
+import Header from "../components/Layout/Header";
 import SessionList from "../components/Session/SessionList";
-import Stats from "../components/Stats";
-import WeightInput from "../components/WeightInput";
+import Stats from "../components/Session/Stats";
+import WeightInput from "../components/Session/WeightInput";
 import classes from './WeighingSession.module.css';
 
 const sessionTemp = {
@@ -62,12 +62,13 @@ function WeighingSession() {
     }
 
     const handleSubmit = () => { 
-        // TODO
+        localStorage.removeItem('session');
+        navigate('/home', { replace: true });
     }
 
     const handleAdd = (obj) => {
 
-        setList(e => [...e, { amount: obj.amount, weight: obj.value, date: Date.now() }]);
+        setList(e => [{ amount: obj.amount, weight: obj.value, date: Date.now() }, ...e]);
 
         let total = 0;
         let amount = 0;
@@ -88,7 +89,7 @@ function WeighingSession() {
     return (
         <div className={classes.container}>
             <Header>
-                <a href="#" className={classes['back-btn']} onClick={handleBackClick}></a>
+                <a href="#" className={classes['back-btn']} onTouchStart={handleBackClick}></a>
                 <p>Weighing Session</p>
             </Header>
 

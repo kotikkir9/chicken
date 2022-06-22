@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "solid-js";
 import { Routes, Route, Navigate } from "solid-app-router"
-import MenuNav from "./components/MenuNav";
-import LoadingSpinner from "./components/LoadingSpinner";
+import MenuNav from "./components/Layout/MenuNav";
+import LoadingSpinner from "./components/UI/LoadingSpinner";
 
 
 const Home = lazy(() => import("./pages/Home"));
