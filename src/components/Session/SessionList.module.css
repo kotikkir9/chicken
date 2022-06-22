@@ -1,13 +1,16 @@
 .container {
     margin-top: 2rem;
+    margin-bottom: 1rem;
 
     border: 1px solid rgba(0, 0, 0, 0.5);
-    border-bottom: none;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-radius: 5px;
 
     display: flex;
     flex-direction: column;
 
     overflow-y: scroll;
+}
+
+.container > :last-child {
+    border: none;
 }

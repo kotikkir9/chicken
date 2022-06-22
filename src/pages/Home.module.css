@@ -1,6 +1,6 @@
 .container {
     display: grid;
-    grid-template-rows: 8% 92%;
+    grid-template-rows: 8% 82% 10%;
 }
 
 .main {

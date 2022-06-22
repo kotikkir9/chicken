@@ -7,6 +7,7 @@ import NewSessionButton from "../components/UI/NewSessionButton";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 import classes from "./Home.module.css";
+import MenuNav from "../components/Layout/MenuNav";
 
 
 function Home() {
@@ -110,6 +111,7 @@ function Home() {
                     <NewSessionButton onClick={handleNewSessionClick} className={classes['new-session-btn']} />
                 </section>
             </main>
+            <MenuNav />
         </div>
     );
 }

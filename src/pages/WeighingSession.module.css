@@ -30,9 +30,35 @@
     grid-template-rows: min-content min-content min-content 1fr;
 }
 
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+}
+
+.select-screen {
+    display: flex;
+    gap: 1rem;
+}
+
+.select-screen > * {
+    border: none;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    background-color: var(--color-primary-light-1);
+    padding: 8px 15px;
+    border-radius: 100px;
+}
+
+.selected {
+    background-color: var(--color-primary-light-2);
+    font-weight: 700;
+}
+
 .submit-btn {
     background-color: #51CF66;
     color: #000;
-    justify-self: end;
-    margin-bottom: 2rem;
 }

@@ -17,7 +17,6 @@ function App() {
 					<Route path="/session/new" element={<WeighingSession />} />
 				</Routes>
 			</Suspense>
-			<MenuNav />
 		</div>
 	);
 }

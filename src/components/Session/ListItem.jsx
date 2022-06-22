@@ -4,7 +4,7 @@ function ListItem(props) {
     const index = props.length - props.index;
 
     return (
-        <li className={classes.container}>
+        <li className={classes.container} onClick={props.onSlide} >
             <p className={classes.index}>{index}</p>
 
             <div className={classes['time-stamp']}>
