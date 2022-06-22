@@ -1,0 +1,16 @@
+.container {
+    margin-top: 2rem;;
+    /* background-color: lightblue; */
+
+    border: 1px solid black;
+    /* border-radius: 15px; */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    /* padding: 5px; */
+
+    display: flex;
+    flex-direction: column;
+    /* gap: 5px; */
+
+    overflow-y: scroll;
+}

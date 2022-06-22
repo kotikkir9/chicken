@@ -25,8 +25,9 @@
 
 .main {
     margin: 2rem;
+    margin-bottom: 0;
     display: grid;
-    grid-template-rows: min-content 1fr min-content 1fr;
+    grid-template-rows: min-content min-content min-content 1fr;
 }
 
 .submit-btn {

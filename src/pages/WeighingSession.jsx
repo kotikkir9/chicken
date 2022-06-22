@@ -3,6 +3,7 @@ import { createSignal, onCleanup, onMount } from "solid-js";
 
 import Button from "../components/Button";
 import Header from "../components/Header";
+import SessionList from "../components/Session/SessionList";
 import Stats from "../components/Stats";
 import WeightInput from "../components/WeightInput";
 import classes from './WeighingSession.module.css';
@@ -15,7 +16,7 @@ const sessionTemp = {
 
 function WeighingSession() {
     const navigate = useNavigate();
-    const [sessionData] = createSignal(sessionTemp);
+    const [sessionData, setSessionData] = createSignal(sessionTemp);
     const [list, setList] = createSignal([]);
     const [average, setAverage] = createSignal(0);
     const [count, setCount] = createSignal(0);
@@ -32,6 +33,23 @@ function WeighingSession() {
 
     onMount(() => {
         window.addEventListener('resize', handleResize);
+
+        const data = localStorage.getItem('session');
+        if(data) {
+            const session = JSON.parse(data);
+            setSessionData(session.session);
+            setList(session.list);
+
+            let total = 0;
+            let amount = 0;
+            for(const e of session.list) {
+                amount += e.amount;
+                total += e.weight;
+            }
+
+            setCount(amount);
+            setAverage(parseInt(total / amount));
+        }
     });
 
     onCleanup(() => {
@@ -48,6 +66,7 @@ function WeighingSession() {
     }
 
     const handleAdd = (obj) => {
+
         setList(e => [...e, { amount: obj.amount, weight: obj.value, date: Date.now() }]);
 
         let total = 0;
@@ -59,6 +78,11 @@ function WeighingSession() {
 
         setCount(amount);
         setAverage(parseInt(total / amount));
+
+        localStorage.setItem('session', JSON.stringify({
+            session: sessionData(),
+            list: list()
+        }));
     }
 
     return (
@@ -72,9 +96,7 @@ function WeighingSession() {
                 <Button className={classes['submit-btn']} onActivate={handleSubmit}>Submit</Button>
                 <Stats session={sessionData()} average={average()} count={count()} />
                 <WeightInput onClick={handleAdd} />
-                <section>
-                    {new Date(sessionData().date).toDateString()}
-                </section>
+                <SessionList list={list()} />
             </main>
         </div>
     );

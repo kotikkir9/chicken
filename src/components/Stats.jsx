@@ -5,7 +5,7 @@ function Stats(props) {
 
     return (
         <section className={classes.container} >
-            <div className={classes.line}>
+            {/* <div className={classes.line}>
                 <p>Date</p>
                 <p>{new Date(props.session?.date).toLocaleString()}</p>
             </div>
@@ -16,7 +16,7 @@ function Stats(props) {
             <div className={classes.line}>
                 <p>Age</p>
                 <p>{props.session?.age} days</p>
-            </div>
+            </div> */}
             <div className={classes.line}>
                 <p>Average (manual)</p>
                 <p>{props.average !== 0 ? `${props.average}g` : '-'}</p>
