@@ -35,7 +35,7 @@ function WeightInput(props) {
         }
     }
 
-    const handleAmountBlur = (e) => {
+    const handleAmountBlur = () => {
         if(!amountRef.value) {
             amountRef.value = 1;
         }
