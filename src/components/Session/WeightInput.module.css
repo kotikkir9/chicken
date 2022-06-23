@@ -11,10 +11,6 @@
     font-size: 1.4rem;
 }
 
-.amount {
-    /* border-bottom: 2px solid rgba(0, 0, 0, 0.3); */
-}
-
 .amount label {
     font-weight: 600;
     font-size: 1.6rem;
@@ -24,9 +20,10 @@
     font-size: 1.6rem;
     font-weight: 600;
     padding: 0.6rem 1rem;
-    width: 50px;
+    width: 60px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 0;
     text-align: center;
     transition: 0.5s;
 }
@@ -37,10 +34,12 @@
 }
 
 .units {
+    color: #000;
     font-family: inherit;
     font-weight: 500;
     font-size: inherit;
     border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 0;
     padding: 0.6rem 1rem;
     padding-right: 2rem;
     background-color: #fff; 

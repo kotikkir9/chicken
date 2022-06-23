@@ -7,6 +7,7 @@ import SessionList from "../components/Session/SessionList";
 import Stats from "../components/Session/Stats";
 import WeightInput from "../components/Session/WeightInput";
 import classes from './WeighingSession.module.css';
+import UpdateModal from "../components/Session/UpdateModal";
 
 const sessionTemp = {
     cropId: 1,
@@ -17,24 +18,16 @@ const sessionTemp = {
 function WeighingSession() {
     const navigate = useNavigate();
 
+    const [confirmOverlayOpen, setConfirmOverlayOpen] = createSignal(false);
+    const [updateModalOpen, setUpdateModalOpen] = createSignal(false);
+
     const [selectedWindow, setSelectedWindow] = createSignal('stats');
     const [sessionData, setSessionData] = createSignal(sessionTemp);
     const [list, setList] = createSignal([]);
     const [average, setAverage] = createSignal(0);
     const [count, setCount] = createSignal(0);
-    const [initialScreenSize] = createSignal(window.innerHeight);
-
-    const handleResize = () => {
-        if(window.innerHeight < initialScreenSize()) {
-            document.body.style.height = 'auto';
-        } else {
-            document.body.style.height = '100%';
-        }
-    }
 
     onMount(() => {
-        window.addEventListener('resize', handleResize);
-
         const data = localStorage.getItem('session');
         if(data) {
             const session = JSON.parse(data);
@@ -53,11 +46,6 @@ function WeighingSession() {
         }
     });
 
-    onCleanup(() => {
-        document.body.style.height = '100%';
-        window.removeEventListener('resize', handleResize);
-    });
-
     const handleBackClick = () => {
         navigate('/home', { replace: true });
     }
@@ -74,6 +62,12 @@ function WeighingSession() {
     const handleAdd = (obj) => {
         setList(e => [{ amount: obj.amount, weight: obj.value, date: Date.now() }, ...e]);
         calculateStats();
+    }
+
+    const openUpdateModal = (item, index) => {
+        setUpdateModalOpen(true);
+
+        console.log(item);
     }
 
     const handleUpdate = (item, index) => {
@@ -105,9 +99,22 @@ function WeighingSession() {
         }));
     }
 
+    const handleCloseOverlay = (e) => {
+        e.stopPropagation();
+        setUpdateModalOpen(false);
+        setConfirmOverlayOpen(false);
+    }
+
 
     return (
         <div className={classes.container}>
+            <Show when={confirmOverlayOpen()} >    
+                
+            </Show>
+            <Show when={updateModalOpen()}>
+                <UpdateModal onBackdropClick={handleCloseOverlay} onCloseClick={handleCloseOverlay} />
+            </Show>
+
             <Header>
                 <a href="#" className={classes['back-btn']} onTouchStart={handleBackClick}></a>
                 <p>Weighing Session</p>
@@ -123,7 +130,7 @@ function WeighingSession() {
                 </section>
                 <Stats session={sessionData()} average={average()} count={count()} selected={selectedWindow()} />
                 <WeightInput onClick={handleAdd} />
-                <SessionList list={list()} onDelete={handleDelete} onUpdate={handleUpdate} />
+                <SessionList list={list()} onDelete={handleDelete} onUpdate={openUpdateModal} />
             </main>
         </div>
     );

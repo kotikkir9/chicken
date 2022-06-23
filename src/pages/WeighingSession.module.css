@@ -1,6 +1,14 @@
 .container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
     display: grid;
-    grid-template-rows: 8% 92%;
+    grid-template-rows: 6% 94%;
+
+    height: -webkit-fill-available;
+	height: -moz-available;
 }
 
 .back-btn {
@@ -8,7 +16,6 @@
     align-self: center;
     width: 30px;
     height: 30px;
-    
 }
 
 .back-btn::after {
