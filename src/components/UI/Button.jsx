@@ -16,6 +16,7 @@ function Button(props) {
         <button
             className={`${classes.btn} ${props.className}`}
             onClick={handleTouchStart}
+            disabled={props.disabled}
         >
             <span className={classes['btn-fill']}></span>
             {props.children}

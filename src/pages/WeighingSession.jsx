@@ -8,6 +8,7 @@ import Stats from "../components/Session/Stats";
 import WeightInput from "../components/Session/WeightInput";
 import classes from './WeighingSession.module.css';
 import UpdateModal from "../components/Session/UpdateModal";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 const sessionTemp = {
     cropId: 1,
@@ -18,16 +19,18 @@ const sessionTemp = {
 function WeighingSession() {
     const navigate = useNavigate();
 
+    const [sending, setSending] = createSignal(false);
     const [confirmOverlayOpen, setConfirmOverlayOpen] = createSignal(false);
     const [updateModalOpen, setUpdateModalOpen] = createSignal(false);
 
     const [itemToUpdate, setItemToUpdate] = createSignal(null);
-
     const [selectedWindow, setSelectedWindow] = createSignal('stats');
     const [sessionData, setSessionData] = createSignal(sessionTemp);
+
     const [list, setList] = createSignal([]);
     const [average, setAverage] = createSignal(0);
     const [count, setCount] = createSignal(0);
+    const [disableSubmit, setDisableSubmit] = createSignal(true);
 
     onMount(() => {
         const data = localStorage.getItem('session');
@@ -43,22 +46,42 @@ function WeighingSession() {
                 total += e.weight;
             }
 
-            setCount(amount);
-            setAverage(parseInt(total / amount));
+            if(total === 0 && amount == 0) {
+                setAverage(0);
+            } else {
+                setAverage(parseInt(total / amount));
+            }
         }
     });
 
     const handleBackClick = () => {
         navigate('/home', { replace: true });
+        localStorage.removeItem('session');
+    }
+
+    const handleSubmit = async () => {
+        if(!list().length) return;
+
+        setSending(true);
+        const res = await fetch('https://solidjs-project-default-rtdb.europe-west1.firebasedatabase.app/chicken-weighing.json', {
+            method: 'POST',
+            body: JSON.stringify({
+                ...sessionData(),
+                list: list(),
+                average: average(),
+                count: count(),
+            })
+        });
+
+        await res.json();
+        setSending(false);
+        
+        navigate('/home', { replace: true });
+        localStorage.removeItem('session');
     }
 
     const handleSelectWindow = (val) => {
         setSelectedWindow(val);
-    }
-
-    const handleSubmit = () => {
-        localStorage.removeItem('session');
-        navigate('/home', { replace: true });
     }
 
     const handleAdd = (obj) => {
@@ -89,6 +112,12 @@ function WeighingSession() {
     }
 
     const calculateStats = () => {
+        if(list().length) {
+            setDisableSubmit(false);
+        } else {
+            setDisableSubmit(true);
+        }
+
         let total = 0;
         let amount = 0;
         for(const e of list()) {
@@ -113,6 +142,7 @@ function WeighingSession() {
 
 
     return (
+        
         <div className={classes.container}>
             <Show when={confirmOverlayOpen()} >    
                 
@@ -126,19 +156,22 @@ function WeighingSession() {
                 <p>Weighing Session</p>
             </Header>
 
-            <main className={classes.main}>
-                <section className={classes.top}>
-                    <div className={classes['select-screen']}>
-                        <button href="#" onClick={handleSelectWindow.bind(this, 'stats')} className={selectedWindow() === 'stats' && classes.selected}>Stats</button>
-                        <button href="#" onClick={handleSelectWindow.bind(this, 'info')} className={selectedWindow() === 'info' && classes.selected}>Info</button>
-                    </div>
-                    <Button className={classes['submit-btn']} onActivate={handleSubmit}>Submit</Button>
-                </section>
-                <Stats session={sessionData()} average={average()} count={count()} selected={selectedWindow()} />
-                <WeightInput onClick={handleAdd} />
-                <SessionList list={list()} onDelete={handleDelete} onUpdate={openUpdateModal} />
-            </main>
+            <Show when={!sending()} fallback={<div className="centered"><LoadingSpinner /></div>}>
+                <main className={classes.main}>
+                    <section className={classes.top}>
+                        <div className={classes['select-screen']}>
+                            <button onClick={handleSelectWindow.bind(this, 'stats')} className={selectedWindow() === 'stats' && classes.selected}>Stats</button>
+                            <button onClick={handleSelectWindow.bind(this, 'info')} className={selectedWindow() === 'info' && classes.selected}>Info</button>
+                        </div>
+                        <Button className={classes['submit-btn']} onActivate={handleSubmit} disabled={disableSubmit()}>Submit</Button>
+                    </section>
+                    <Stats session={sessionData()} average={average()} count={count()} selected={selectedWindow()} />
+                    <WeightInput onClick={handleAdd} />
+                    <SessionList list={list()} onDelete={handleDelete} onUpdate={openUpdateModal} />
+                </main>
+            </Show>
         </div>
+        
     );
 }
 

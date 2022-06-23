@@ -9,11 +9,11 @@ function Session(props) {
             <main className={classes.body}>
                 <div>
                     <p>Weighings</p>
-                    <p>{props.session.weighings}</p>
+                    <p>{props.session.count}</p>
                 </div>
                 <div>
                     <p>Crop</p>
-                    <p>#{props.session.crop}</p>
+                    <p>#{props.session.cropId}</p>
                 </div>
                 <div>
                     <p>Average</p>
