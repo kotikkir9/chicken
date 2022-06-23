@@ -1,0 +1,18 @@
+1. Popup for session - input: crop ID and age.
+
+2. Popup confirm return - data will be lost.
+
+3. Submit to database - delete localstorage.
+
+4. If app crashed, make sure popup will apper and ask if user 
+want to continue his previuos session, or discard session.
+
+5. Popup for updating single weight.
+
+6. Update session data when deleting or updating single weight.
+
+7. Units change
+
+8. Cant submit if there is no data.
+
+9. Fix apple CSS problem.

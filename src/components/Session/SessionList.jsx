@@ -4,14 +4,18 @@ import classes from "./SessionList.module.css";
 
 function SessionList(props) {
 
+    const preventScroll = (e) => {
+        e.preventDefault();
+        return false;
+    }
 
     return (
-        <ul className={classes.container}>
+        <ul className={classes.container} onWheel={preventScroll}>
             <Show when={props.list.length === 0}>
                 <h3 className="centered">No entries</h3>
             </Show>
             <For each={props.list} >
-                {(e, i)=> <ListItem item={e} index={i()} length={props.list.length} onSlide={props.onDelete.bind(this, e)} />}
+                {(e, i)=> <ListItem item={e} index={i()} length={props.list.length} onDelete={props.onDelete.bind(this, e)} onUpdate={props.onUpdate.bind(this, e, i())} />}
             </For>
         </ul>
     );

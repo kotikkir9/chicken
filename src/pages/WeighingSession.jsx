@@ -73,7 +73,22 @@ function WeighingSession() {
 
     const handleAdd = (obj) => {
         setList(e => [{ amount: obj.amount, weight: obj.value, date: Date.now() }, ...e]);
+        calculateStats();
+    }
 
+    const handleUpdate = (item, index) => {
+        list()[index] = { ...item, weight: 10000, amount: 10 };
+        // list()[index] = { ...item };
+        setList([...list()]);
+        calculateStats();
+    }
+
+    const handleDelete = (item) => {
+        setList(list().filter(e => e !== item));
+        calculateStats();
+    }
+
+    const calculateStats = () => {
         let total = 0;
         let amount = 0;
         for(const e of list()) {
@@ -82,7 +97,7 @@ function WeighingSession() {
         }
 
         setCount(amount);
-        setAverage(parseInt(total / amount));
+        setAverage(total !== 0 ? parseInt(total / amount) : 0);
 
         localStorage.setItem('session', JSON.stringify({
             session: sessionData(),
@@ -90,9 +105,6 @@ function WeighingSession() {
         }));
     }
 
-    const handleDelete = (item) => {
-        setList(list().filter(e => e !== item));
-    }
 
     return (
         <div className={classes.container}>
@@ -111,7 +123,7 @@ function WeighingSession() {
                 </section>
                 <Stats session={sessionData()} average={average()} count={count()} selected={selectedWindow()} />
                 <WeightInput onClick={handleAdd} />
-                <SessionList list={list()} onDelete={handleDelete} />
+                <SessionList list={list()} onDelete={handleDelete} onUpdate={handleUpdate} />
             </main>
         </div>
     );
