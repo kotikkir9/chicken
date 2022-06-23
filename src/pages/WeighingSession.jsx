@@ -1,5 +1,5 @@
 import { useNavigate } from "solid-app-router";
-import { createSignal, onCleanup, onMount } from "solid-js";
+import { createSignal, onMount  } from "solid-js";
 
 import Button from "../components/UI/Button";
 import Header from "../components/Layout/Header";
@@ -20,6 +20,8 @@ function WeighingSession() {
 
     const [confirmOverlayOpen, setConfirmOverlayOpen] = createSignal(false);
     const [updateModalOpen, setUpdateModalOpen] = createSignal(false);
+
+    const [itemToUpdate, setItemToUpdate] = createSignal(null);
 
     const [selectedWindow, setSelectedWindow] = createSignal('stats');
     const [sessionData, setSessionData] = createSignal(sessionTemp);
@@ -54,7 +56,7 @@ function WeighingSession() {
         setSelectedWindow(val);
     }
 
-    const handleSubmit = () => { 
+    const handleSubmit = () => {
         localStorage.removeItem('session');
         navigate('/home', { replace: true });
     }
@@ -65,16 +67,20 @@ function WeighingSession() {
     }
 
     const openUpdateModal = (item, index) => {
+        setItemToUpdate({ item, index});
         setUpdateModalOpen(true);
-
-        console.log(item);
     }
 
-    const handleUpdate = (item, index) => {
-        list()[index] = { ...item, weight: 10000, amount: 10 };
-        // list()[index] = { ...item };
-        setList([...list()]);
-        calculateStats();
+    const handleUpdate = (data) => {
+        if(data) {
+            setList(prev => {
+                prev[data.index] = { ...data.item };
+                return [...prev];
+            })
+            calculateStats();
+        }
+
+        handleCloseOverlay();
     }
 
     const handleDelete = (item) => {
@@ -99,10 +105,10 @@ function WeighingSession() {
         }));
     }
 
-    const handleCloseOverlay = (e) => {
-        e.stopPropagation();
+    const handleCloseOverlay = () => {
         setUpdateModalOpen(false);
         setConfirmOverlayOpen(false);
+        setItemToUpdate(null);
     }
 
 
@@ -112,7 +118,7 @@ function WeighingSession() {
                 
             </Show>
             <Show when={updateModalOpen()}>
-                <UpdateModal onBackdropClick={handleCloseOverlay} onCloseClick={handleCloseOverlay} />
+                <UpdateModal data={itemToUpdate()} updateItem={handleUpdate} onBackdropClick={handleCloseOverlay} onCloseClick={handleCloseOverlay} />
             </Show>
 
             <Header>
