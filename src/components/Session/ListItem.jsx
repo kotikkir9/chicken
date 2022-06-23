@@ -1,10 +1,14 @@
 import { createEffect, createSignal } from 'solid-js';
 import classes from './ListItem.module.css';
+import deleteIcon from '../../assets/trash.png';
+import updateIcon from '../../assets/edit.png';
 
 let timeout;
 
 function ListItem(props) {
     const [index, setIndex] = createSignal(props.length - props.index)
+    let updateRef;
+    let deleteRef;
 
     createEffect(() => {
         setIndex(props.length - props.index);
@@ -46,6 +50,7 @@ function ListItem(props) {
         const width = target.getBoundingClientRect().width;
         let diff = parseInt(width * 0.35);
 
+
         if(margin < -diff || margin > diff) {
             target.classList.add(classes['action-active']);
 
@@ -64,6 +69,9 @@ function ListItem(props) {
             setAction('');
         }
 
+        updateRef.style.width = `${margin}px`
+        deleteRef.style.width = `${-margin}px`
+
         target.style.transition = 'margin 0s';
         target.style.marginLeft = `${margin}px`
     }
@@ -80,6 +88,9 @@ function ListItem(props) {
                 target.classList.remove(classes['action-active']);
                 target.style.transition = 'margin 0.3s ease-out';
                 target.style.marginLeft = '0px';
+            } else {
+                deleteRef.style.width = '100%';
+                deleteRef.style.right = '-100%';
             }
             
             target.parentNode.style.overflowY = 'scroll';
@@ -96,10 +107,15 @@ function ListItem(props) {
         }
     }
 
+
     return (
         <li className={classes.container} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
-            <div className={classes.update}></div>
-            <div className={classes.delete}></div>
+            <div ref={updateRef} className={classes.update}>
+                <img src={updateIcon} alt="Update Icon" className={classes.icon} />
+            </div>
+            <div ref={deleteRef} className={classes.delete}>
+                <img src={deleteIcon} alt="Delete Icon" className={classes.icon} />
+            </div>
             <p className={classes.index}>{index}</p>
             <div className={classes['time-stamp']}>
                 <p>{new Date(props.item.date).toLocaleTimeString()}</p>

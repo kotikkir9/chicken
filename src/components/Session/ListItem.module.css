@@ -45,18 +45,23 @@
 .update,
 .delete {
     position: absolute;
-    width: 100%;
+    width: 0;
     height: 100%;
     background-color: var(--color-grey-light);
-    transition: background-color 0.3s, height 0.5s;
+    transition: background-color 0.3s;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .update {
-    left: -100%;
+    right: 100%;
 }
 
 .delete {
-    right: -100%;
+    left: 100%;
 }
 
 .action-active .update {
@@ -65,6 +70,11 @@
 
 .action-active .delete {
     background-color: #e03131;
+}
+
+.icon {
+    height: 50%;
+    width: auto;
 }
 
 .deleted {
