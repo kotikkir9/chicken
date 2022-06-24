@@ -25,8 +25,6 @@ function Home() {
         const res = await fetch('https://solidjs-project-default-rtdb.europe-west1.firebasedatabase.app/chicken-weighing.json');
         const json = await res.json();
 
-        console.log(json);
-
         const array = [];
         for(const key in json) {
             array.push({ id: key, ...json[key], date: new Date(json[key].date)});

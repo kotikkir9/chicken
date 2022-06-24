@@ -16,6 +16,10 @@
     align-self: center;
     width: 30px;
     height: 30px;
+
+    border: none;
+    background-color: var(--color-primary);
+    outline: none;
 }
 
 .back-btn::after {

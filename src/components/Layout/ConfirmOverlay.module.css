@@ -1,0 +1,36 @@
+.modal {
+    padding: 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;  
+}
+
+.textbox {
+    grid-column: 1 / -1;
+}
+
+.textbox h3 {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.textbox p {
+    font-size: 1.6rem;
+    opacity: 0.8;
+}
+
+.btn {
+    padding-top: 1.3rem;
+    padding-bottom: 1.3rem;
+}
+
+.confirm-btn {
+    background-color: #fff;
+    color: #01406b;
+    box-shadow:inset 0px 0px 0px 1px #01406b;
+}

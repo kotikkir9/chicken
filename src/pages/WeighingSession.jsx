@@ -9,6 +9,7 @@ import WeightInput from "../components/Session/WeightInput";
 import classes from './WeighingSession.module.css';
 import UpdateModal from "../components/Session/UpdateModal";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
+import ConfirmOverlay from "../components/Layout/ConfirmOverlay";
 
 const sessionTemp = {
     cropId: 1,
@@ -54,7 +55,17 @@ function WeighingSession() {
         }
     });
 
-    const handleBackClick = () => {
+    const handleBackClick = (e) => {
+        // e.stopPropagation();
+
+        if(list().length) {
+            setConfirmOverlayOpen(true);
+        } else {
+            returnHome();
+        }
+    }
+
+    const returnHome = () =>{
         navigate('/home', { replace: true });
         localStorage.removeItem('session');
     }
@@ -142,17 +153,22 @@ function WeighingSession() {
 
 
     return (
-        
         <div className={classes.container}>
             <Show when={confirmOverlayOpen()} >    
-                
+                <ConfirmOverlay 
+                    onCancel={handleCloseOverlay} 
+                    onConfirm={returnHome} 
+                    heading={'You have some unsaved data'} 
+                    text={'Do you want to leave? All your session data will be lost.'} 
+                    onBackdropClick={handleCloseOverlay}
+                />
             </Show>
             <Show when={updateModalOpen()}>
                 <UpdateModal data={itemToUpdate()} updateItem={handleUpdate} onBackdropClick={handleCloseOverlay} onCloseClick={handleCloseOverlay} />
             </Show>
 
             <Header>
-                <a href="#" className={classes['back-btn']} onTouchStart={handleBackClick}></a>
+                <button className={classes['back-btn']} onClick={handleBackClick}></button>
                 <p>Weighing Session</p>
             </Header>
 
@@ -171,7 +187,6 @@ function WeighingSession() {
                 </main>
             </Show>
         </div>
-        
     );
 }
 
