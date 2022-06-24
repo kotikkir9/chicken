@@ -16,6 +16,7 @@ function WeighingSession() {
     const navigate = useNavigate();
 
     const [sending, setSending] = createSignal(false);
+
     const [confirmOverlayOpen, setConfirmOverlayOpen] = createSignal(false);
     const [updateModalOpen, setUpdateModalOpen] = createSignal(false);
     const [sessionDataModalOpen, setSessionDataModalOpen] = createSignal(false);
@@ -34,6 +35,7 @@ function WeighingSession() {
         const data = localStorage.getItem('session');
 
         if(data) {
+            setDisableSubmit(false);
             const session = JSON.parse(data);
             setSessionData(session.session);
             setList(session.list);
@@ -47,7 +49,9 @@ function WeighingSession() {
 
             if(total === 0 && amount == 0) {
                 setAverage(0);
+                setCount(0);
             } else {
+                setCount(amount);
                 setAverage(parseInt(total / amount));
             }
         } else {
