@@ -76,19 +76,7 @@ h3 {
 	height: 100%;
 }
 
-@media only screen and (max-height: 43.75em) and (max-width: 23.75em) {
-    html {
-        font-size: 55%;
-    }
-}
-
-@media only screen and (max-height: 37.5em) and (max-width: 20.625em) {
-    html {
-        font-size: 50%;
-    }
-}
-
-@media only screen and (hover: hover), (min-width: 480px) {
+/* @media only screen and (hover: hover), (min-width: 480px) {
     .app::after {
 		content: "Only small/touch screens!";
 		color: white;
@@ -104,4 +92,16 @@ h3 {
 		align-items: center;
 		justify-content: center;
 	}
+} */
+
+@media only screen and (max-height: 43.75em) and (max-width: 23.75em) {
+    html {
+        font-size: 55%;
+    }
+}
+
+@media only screen and (max-height: 37.5em) and (max-width: 20.625em) {
+    html {
+        font-size: 50%;
+    }
 }
