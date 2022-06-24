@@ -55,9 +55,7 @@ function WeighingSession() {
         }
     });
 
-    const handleBackClick = (e) => {
-        // e.stopPropagation();
-
+    const handleBackClick = () => {
         if(list().length) {
             setConfirmOverlayOpen(true);
         } else {

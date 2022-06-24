@@ -20,7 +20,7 @@
 }
 
 .form-group {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .form-group label {
@@ -57,7 +57,8 @@
 }
 
 .apply-btn {
-    justify-self: center;
+    padding-top: 1.3rem;
+    padding-bottom: 1.3rem;
 }
 
 /* ------------------ CLOSE ICON ------------------ */
