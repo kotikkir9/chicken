@@ -88,7 +88,7 @@ h3 {
     }
 }
 
-/* @media only screen and (hover: hover), (min-width: 480px) {
+@media only screen and (hover: hover), (min-width: 480px) {
     .app::after {
 		content: "Only small/touch screens!";
 		color: white;
@@ -104,4 +104,4 @@ h3 {
 		align-items: center;
 		justify-content: center;
 	}
-} */
+}
