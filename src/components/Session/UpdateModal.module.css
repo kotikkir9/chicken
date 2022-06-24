@@ -50,12 +50,6 @@
     background-color: var(--color-primary-light-1);
 }
 
-
-.weight-input:focus {
-    outline: none;
-    background-color: var(--color-primary-light-1);
-}
-
 .apply-btn {
     padding-top: 1.3rem;
     padding-bottom: 1.3rem;

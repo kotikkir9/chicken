@@ -9,8 +9,8 @@ function ConfirmOverlay(props) {
                 <h3>{props.heading}</h3>
                 <p>{props.text}</p>
             </div>
-            <Button onActivate={props.onConfirm} className={`${classes['btn']} ${classes['confirm-btn']}`}>Confirm</Button>
-            <Button onActivate={props.onCancel} className={`${classes['btn']}`}>Stay</Button>
+            <Button onActivate={props.onLeftClick} className={`${classes['btn']} ${props.secondary === 'left' ? classes['secondary-btn'] : null}`}>{props.left}</Button>
+            <Button onActivate={props.onRightClick} className={`${classes['btn']} ${props.secondary === 'right' ? classes['secondary-btn'] : null}`}>{props.right}</Button>
         </Modal>
     )
 }

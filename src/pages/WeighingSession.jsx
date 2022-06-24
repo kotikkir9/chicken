@@ -1,5 +1,5 @@
 import { useNavigate } from "solid-app-router";
-import { createSignal, onMount  } from "solid-js";
+import { createSignal, onMount, Show  } from "solid-js";
 
 import Button from "../components/UI/Button";
 import Header from "../components/Layout/Header";
@@ -10,12 +10,7 @@ import classes from './WeighingSession.module.css';
 import UpdateModal from "../components/Session/UpdateModal";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import ConfirmOverlay from "../components/Layout/ConfirmOverlay";
-
-const sessionTemp = {
-    cropId: 1,
-    age: 27,
-    date: Date.now(),
-}
+import SessionDataInput from "../components/Session/SessionDataInput";
 
 function WeighingSession() {
     const navigate = useNavigate();
@@ -23,10 +18,12 @@ function WeighingSession() {
     const [sending, setSending] = createSignal(false);
     const [confirmOverlayOpen, setConfirmOverlayOpen] = createSignal(false);
     const [updateModalOpen, setUpdateModalOpen] = createSignal(false);
+    const [sessionDataModalOpen, setSessionDataModalOpen] = createSignal(false);
+    const [submitModalOpen, setSubmitModalOpen] = createSignal(false);
 
     const [itemToUpdate, setItemToUpdate] = createSignal(null);
     const [selectedWindow, setSelectedWindow] = createSignal('stats');
-    const [sessionData, setSessionData] = createSignal(sessionTemp);
+    const [sessionData, setSessionData] = createSignal({});
 
     const [list, setList] = createSignal([]);
     const [average, setAverage] = createSignal(0);
@@ -35,6 +32,7 @@ function WeighingSession() {
 
     onMount(() => {
         const data = localStorage.getItem('session');
+
         if(data) {
             const session = JSON.parse(data);
             setSessionData(session.session);
@@ -52,8 +50,15 @@ function WeighingSession() {
             } else {
                 setAverage(parseInt(total / amount));
             }
+        } else {
+            setSessionDataModalOpen(true);
         }
     });
+
+    const handleSessionData = (data) => {
+        setSessionData(data);
+        setSessionDataModalOpen(false);
+    }
 
     const handleBackClick = () => {
         if(list().length) {
@@ -68,7 +73,12 @@ function WeighingSession() {
         localStorage.removeItem('session');
     }
 
+    const openSubmitModal = () => {
+        setSubmitModalOpen(true);
+    }
+
     const handleSubmit = async () => {
+        setSubmitModalOpen(false);
         if(!list().length) return;
 
         setSending(true);
@@ -146,16 +156,35 @@ function WeighingSession() {
     const handleCloseOverlay = () => {
         setUpdateModalOpen(false);
         setConfirmOverlayOpen(false);
+        setSubmitModalOpen(false);
         setItemToUpdate(null);
     }
 
 
     return (
         <div className={classes.container}>
+            <Show when={sessionDataModalOpen()}>
+                <SessionDataInput onSubmit={handleSessionData} onCancel={returnHome} />
+            </Show>
+            <Show when={submitModalOpen()}>
+                <ConfirmOverlay 
+                    onLeftClick={handleCloseOverlay} 
+                    onRightClick={handleSubmit} 
+                    secondary="left"
+                    left="Cancel"
+                    right="Submit"
+                    heading={'Confirm Submission'} 
+                    text={'Submit your data, if you are done with the weighing session.'} 
+                    onBackdropClick={handleCloseOverlay}
+                />
+            </Show>
             <Show when={confirmOverlayOpen()} >    
                 <ConfirmOverlay 
-                    onCancel={handleCloseOverlay} 
-                    onConfirm={returnHome} 
+                    onRightClick={handleCloseOverlay} 
+                    onLeftClick={returnHome}
+                    left="Discard"
+                    right="Stay"
+                    secondary="left"
                     heading={'You have some unsaved data'} 
                     text={'Do you want to leave? All your session data will be lost.'} 
                     onBackdropClick={handleCloseOverlay}
@@ -177,7 +206,7 @@ function WeighingSession() {
                             <button onClick={handleSelectWindow.bind(this, 'stats')} className={selectedWindow() === 'stats' && classes.selected}>Stats</button>
                             <button onClick={handleSelectWindow.bind(this, 'info')} className={selectedWindow() === 'info' && classes.selected}>Info</button>
                         </div>
-                        <Button className={classes['submit-btn']} onActivate={handleSubmit} disabled={disableSubmit()}>Submit</Button>
+                        <Button className={classes['submit-btn']} onActivate={openSubmitModal} disabled={disableSubmit()}>Submit</Button>
                     </section>
                     <Stats session={sessionData()} average={average()} count={count()} selected={selectedWindow()} />
                     <WeightInput onClick={handleAdd} />
